@@ -24,7 +24,6 @@ include_directories(
   include
 )
 
-
 add_executable(minimal_cpp_publisher src/minimal_cpp_publisher.cpp)
 ament_target_dependencies(minimal_cpp_publisher ${dependencies})
 
@@ -61,6 +60,7 @@ install(
 if(BUILD_TESTING)
   #find_package(ament_lint_auto REQUIRED)
   find_package(ament_cmake_pytest REQUIRED)
+  find_package(ament_cmake_gtest REQUIRED)
   # the following line skips the linter which checks for copyrights
   # comment the line when a copyright and license is added to all source files
   #set(ament_cmake_copyright_FOUND TRUE)
@@ -69,9 +69,14 @@ if(BUILD_TESTING)
   # a copyright and license is added to all source files
   #set(ament_cmake_cpplint_FOUND TRUE)
   #ament_lint_auto_find_test_dependencies()
-  ament_add_pytest_test(minimal_publisher_test test/pytest/test_publisher.py
-    TIMEOUT 60 # 60 seconds
-    )
+  
+  # Python Tests
+  ament_add_pytest_test(minimal_py_publisher_test test/pytest/test_publisher.py
+    TIMEOUT 60) # 60 seconds
+
+  # C++ Tests
+  ament_add_gtest(minimal_cpp_publisher_test test/gtest/test_publisher.cpp)
+  ament_target_dependencies(minimal_cpp_publisher_test ${dependencies})
 endif()
 
 ament_export_include_directories(include) # allows other packages to include header files from this package

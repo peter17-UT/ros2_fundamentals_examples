@@ -50,6 +50,8 @@ class MinimalCppPublisher : public rclcpp::Node {
         rclcpp::Publisher<std_msgs::msg::String>::SharedPtr publisher_; // The publisher object
 };
 
+
+#ifndef TESTING_EXCLUDE_MAIN // Exclude main function in testing
 // Main function to start the ROS2 node upon launch
 int main(int argc, char * argv[]) {
     // Initialize ROS2 communication
@@ -68,3 +70,4 @@ int main(int argc, char * argv[]) {
     return 0;
 
 };
+#endif
